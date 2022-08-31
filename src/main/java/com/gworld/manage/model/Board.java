@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
     String title;
     String content;
     String author;

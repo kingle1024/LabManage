@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>공지사항</h1>
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>날짜</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="l : ${list}">
+            <td th:text="${l.id}"></td>
+            <td>
+                <a th:href="${'detail.do?id='+l.id}" th:text="${l.title}">link</a>
+            </td>
+            <td th:text="${l.author}"></td>
+            <td th:text="${l.hit}"></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
