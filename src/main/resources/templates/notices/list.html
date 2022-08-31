@@ -21,7 +21,9 @@
         <tbody>
         <tr th:each="l : ${list}">
             <td th:text="${l.id}"></td>
-            <td th:text="${l.title}"></td>
+            <td>
+                <a th:href="${'detail.do?id='+l.id}" th:text="${l.title}">link</a>
+            </td>
             <td th:text="${l.author}"></td>
             <td th:text="${l.hit}"></td>
         </tr>
