@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -69,7 +70,7 @@
 
     <form method="post" id="deleteForm">
         <input type="hidden" name="id" id="id" th:value="${board.id}">
-        <button type="submit">삭제</button>
+        <button type="submit" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
     </form>
     <a href="list.do">목록으로</a>
 </body>
