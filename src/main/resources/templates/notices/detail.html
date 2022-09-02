@@ -3,7 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(function (){
+            $('#deleteForm').on('submit', function(){
+                if(!confirm('정말 삭제하시겠습니까?')){
+                    return false;
+                }
+
+                var $this = $(this);
+                var url = '/api/notice/del.api';
+                var parameter = {
+                    id : $this.find('input[name=id]').val()
+                };
+
+                axios.post(url, parameter).then(function(response){
+                    console.log(response);
+                    response.data = response.data || {};
+                    response.data.header = response.data.header || {};
+
+                    if(!response.data.header.result){
+                        alert(response.data.header.message);
+                        return false;
+                    }
+                    // console.log(response.data);
+                    // console.log(response.data.header);
+                    alert('삭제되었습니다.');
+                    location.href ='/notice/list.do';
+                }).catch(function(err){
+                    alert('삭제를 실패했습니다.');
+                    console.log(err);
+                });
+
+                return false;
+            });
+        });
+
+    </script>
 </head>
+
 <body>
 <h1>공지사항 상세</h1>
 <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
@@ -27,6 +66,11 @@
         </tr>
         </tbody>
     </table>
+
+    <form method="post" id="deleteForm">
+        <input type="hidden" name="id" id="id" th:value="${board.id}">
+        <button type="submit">삭제</button>
+    </form>
     <a href="list.do">목록으로</a>
 </body>
 </html>
