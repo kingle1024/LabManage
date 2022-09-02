@@ -2,7 +2,6 @@ package com.gworld.manage.common.model;
 
 import lombok.Data;
 
-//@Data
 public class ResponseResult {
     ResponseResultHeader header;
     Object body;
