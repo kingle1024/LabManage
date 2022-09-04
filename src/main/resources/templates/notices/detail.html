@@ -41,12 +41,44 @@
             });
         });
 
+        $('#commentForm').on('submit', function(){
+            if(!confirm('정말 등록하시겠습니까?')){
+                return false;
+            }
+
+            var $this = $(this);
+            var url = '/api/comment/register';
+            var parameter = {
+                id : $this.find('input[name=id]').val()
+            };
+
+            axios.post(url, parameter).then(function(response){
+                console.log(response);
+                response.data = response.data || {};
+                response.data.header = response.data.header || {};
+
+                if(!response.data.header.result){
+                    alert(response.data.header.message);
+                    return false;
+                }
+                // console.log(response.data);
+                // console.log(response.data.header);
+                alert('등록되었습니다.');
+                location.href ='/notice/list.do';
+            }).catch(function(err){
+                alert('삭제를 실패했습니다.');
+                console.log(err);
+            });
+
+            return false;
+        });
     </script>
 </head>
 
 <body>
 <h1>공지사항 상세</h1>
 <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+    <h3>공지사항</h3>
     <table>
         <thead>
         <tr>
@@ -62,8 +94,8 @@
             <td th:text="${l.id}"></td>
             <td th:text="${l.title}"></td>
             <td th:text="${l.author}"></td>
-            <td th:text="${l.register_date}"></td>
-            <td th:text="${l.update_date}"></td>
+            <td th:text="${l.registerDate}"></td>
+            <td th:text="${l.updateDate}"></td>
         </tr>
         </tbody>
     </table>
@@ -72,6 +104,25 @@
         <input type="hidden" name="id" id="id" th:value="${board.id}">
         <button type="submit" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
     </form>
+    <hr/>
+
+    <h3>댓글</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>작성자</th>
+            <th>내용</th>
+            <th>날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${comments}">
+            <td th:text="${c.author}"></td>
+            <td th:text="${c.comment}"></td>
+            <td th:text="${c.registerDate}"></td>
+        </tr>
+        </tbody>
+    </table>
     <a href="list.do">목록으로</a>
 </body>
 </html>
