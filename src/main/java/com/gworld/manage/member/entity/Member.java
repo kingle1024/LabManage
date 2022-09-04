@@ -21,6 +21,6 @@ public class Member {
     private String password;
     private String profileImagePath;
     private boolean enabled;
-    private LocalDateTime register_date;
+    private LocalDateTime registerDate;
     private boolean adminYn;
 }
