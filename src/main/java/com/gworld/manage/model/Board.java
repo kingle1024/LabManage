@@ -24,8 +24,8 @@ public class Board {
     String content;
     String author;
     long hit;
-    LocalDateTime register_date;
-    LocalDateTime update_date;
-    boolean delete_yn;
-    String type_code;
+    LocalDateTime registerDate;
+    LocalDateTime updateDate;
+    boolean deleteYn;
+    String typeCode;
 }

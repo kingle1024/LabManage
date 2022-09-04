@@ -19,11 +19,10 @@ public class BoardDto {
     String content;
     String author;
     long hit;
-    LocalDateTime register_date;
-    LocalDateTime update_date;
-    boolean delete_yn;
-    String type_code;
-
+    LocalDateTime registerDate;
+    LocalDateTime updateDate;
+    boolean deleteYn;
+    String typeCode;
 
     public static BoardDto of(Board board){
         return BoardDto.builder()
@@ -32,10 +31,10 @@ public class BoardDto {
                 .content(board.getContent())
                 .author(board.getAuthor())
                 .hit(board.getHit())
-                .register_date(board.getRegister_date())
-                .update_date(board.getUpdate_date())
-                .delete_yn(board.isDelete_yn())
-                .type_code(board.getType_code())
+                .registerDate(board.getRegisterDate())
+                .updateDate(board.getUpdateDate())
+                .deleteYn(board.isDeleteYn())
+                .typeCode(board.getTypeCode())
                 .build();
     }
     public static List<BoardDto> of(List<Board> boards){

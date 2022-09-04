@@ -51,8 +51,8 @@ class NoticeServiceImplTest {
                 .content("content")
                 .hit(1)
                 .author("author")
-                .register_date(now)
-                .update_date(now)
+                .registerDate(now)
+                .updateDate(now)
                 .build();
 
         // given
@@ -68,8 +68,8 @@ class NoticeServiceImplTest {
         assertEquals("content", boardDto.getContent());
         assertEquals(1, boardDto.getHit());
         assertEquals("author", boardDto.getAuthor());
-        assertEquals(now, boardDto.getRegister_date());
-        assertEquals(now, boardDto.getUpdate_date());
+        assertEquals(now, boardDto.getRegisterDate());
+        assertEquals(now, boardDto.getUpdateDate());
     }
 
     @Test
@@ -82,9 +82,9 @@ class NoticeServiceImplTest {
                 .content("content")
                 .hit(1)
                 .author("author")
-                .register_date(now)
-                .update_date(now)
-                .delete_yn(false)
+                .registerDate(now)
+                .updateDate(now)
+                .deleteYn(false)
                 .build();
 
         // given
@@ -97,7 +97,7 @@ class NoticeServiceImplTest {
         //then
         assertTrue(result.isResult());
         assertEquals("", result.getMessage());
-        assertTrue(board.isDelete_yn());
+        assertTrue(board.isDeleteYn());
     }
     @Test
     @DisplayName("long id가 잘못되었을때 실패 처리")
@@ -109,9 +109,9 @@ class NoticeServiceImplTest {
                 .content("content")
                 .hit(1)
                 .author("author")
-                .register_date(now)
-                .update_date(now)
-                .delete_yn(false)
+                .registerDate(now)
+                .updateDate(now)
+                .deleteYn(false)
                 .build();
 
         // given
@@ -124,6 +124,6 @@ class NoticeServiceImplTest {
         //then
         assertFalse(result.isResult());
         assertEquals("게시글 정보가 존재하지 않습니다.", result.getMessage());
-        assertFalse(board.isDelete_yn());
+        assertFalse(board.isDeleteYn());
     }
 }

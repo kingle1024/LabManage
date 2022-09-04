@@ -44,7 +44,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
         Board board = optionalBoard.get();
-        board.setDelete_yn(true);
+        board.setDeleteYn(true);
         boardRepository.save(board);
 
         result.setResult(true);
