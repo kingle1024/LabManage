@@ -26,7 +26,7 @@ public class ApiNoticeController {
         Member member = memberService.detail(principal.getName());
         ResponseResult responseResult;
         ServiceResult result = new ServiceResult();
-        if(!member.isAdminYn()){
+        if(!member.isAdmin()){
             result.setMessage("관리자가 아닙니다.");
             result.setResult(false);
             responseResult = new ResponseResult(false, result.getMessage());
