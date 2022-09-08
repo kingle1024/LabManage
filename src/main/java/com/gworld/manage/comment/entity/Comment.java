@@ -1,4 +1,4 @@
-package com.gworld.manage.model;
+package com.gworld.manage.comment.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,21 +11,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-@Entity
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class Board {
+@NoArgsConstructor
+@Entity
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String title;
-    String content;
+    long no;
+    long boardNo;
     String author;
-    long hit;
+    String comment;
     LocalDateTime registerDate;
     LocalDateTime updateDate;
-    boolean deleteYn;
     String typeCode;
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardDto {
+public class BoardParam {
     Long id;
     String title;
     String content;
@@ -24,8 +24,8 @@ public class BoardDto {
     boolean deleteYn;
     String typeCode;
 
-    public static BoardDto of(Board board){
-        return BoardDto.builder()
+    public static BoardParam of(BoardDto board){
+        return BoardParam.builder()
                 .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
@@ -37,11 +37,11 @@ public class BoardDto {
                 .typeCode(board.getTypeCode())
                 .build();
     }
-    public static List<BoardDto> of(List<Board> boards){
+    public static List<BoardParam> of(List<BoardDto> boards){
         if(boards == null) return null;
-        List<BoardDto> boardList = new ArrayList<>();
-        for(Board x : boards){
-            boardList.add(BoardDto.of(x));
+        List<BoardParam> boardList = new ArrayList<>();
+        for(BoardDto x : boards){
+            boardList.add(BoardParam.of(x));
         }
         return boardList;
     }
