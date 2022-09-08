@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -19,14 +18,14 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final MemberService memberService;
-    @Autowired
-    public AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Bean
     PasswordEncoder getPasswordEncoder(){return new BCryptPasswordEncoder();}
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        com.gworld.manage.configuration.AuthenticationSuccessHandler a = new com.gworld.manage.configuration.AuthenticationSuccessHandler();
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
 
@@ -38,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/member/login")
                         .successHandler(authenticationSuccessHandler)
+                        .successHandler(a)
                         .permitAll();
         http.exceptionHandling()
                 .accessDeniedPage("/error/denied");
