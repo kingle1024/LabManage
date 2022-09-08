@@ -1,6 +1,7 @@
 package com.gworld.manage.comment.service;
 
 import com.gworld.manage.comment.entity.Comment;
+import com.gworld.manage.comment.model.CommentDto;
 import com.gworld.manage.comment.repository.CommentRepository;
 import com.gworld.manage.model.Board;
 import org.junit.jupiter.api.Test;
@@ -56,10 +57,10 @@ class CommentServiceImplTest {
         givenList.add(c2);
 
         given(commentRepository.findAllByBoardNoAndTypeCode(anyLong(), anyString()))
-                .willReturn(Optional.of(givenList));
+                .willReturn(givenList);
 
         // when
-        List<Comment> commentList = commentService.list(anyLong(), anyString());
+        List<CommentDto> commentList = commentService.list(anyLong(), anyString());
 
         // then
         assertEquals(2, commentList.size());

@@ -1,11 +1,14 @@
 package com.gworld.manage.controller;
 
 import com.gworld.manage.comment.entity.Comment;
+import com.gworld.manage.comment.model.CommentDto;
 import com.gworld.manage.member.entity.Member;
 import com.gworld.manage.member.service.MemberService;
 import com.gworld.manage.model.Board;
 import com.gworld.manage.model.BoardDto;
 import com.gworld.manage.comment.service.CommentService;
+import com.gworld.manage.model.BoardParam;
+import com.gworld.manage.model.CommentParam;
 import com.gworld.manage.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -30,14 +33,19 @@ public class NoticeController {
     }
 
     @GetMapping("/notice/detail.do")
-    public String detail(BoardDto boardDto, Member boardParam,
+    public String detail(BoardParam parameter,
                          Model model, Principal principal){
-        BoardDto board = noticeService.detail(boardDto.getId());
-        model.addAttribute("board", board);
-        List<Comment> comments =
-                commentService.list(boardDto.getId(), "1001");
 
-        model.addAttribute("comments", comments);
+        long id = parameter.getId();
+        BoardDto boardDto = noticeService.detail(id);
+        BoardParam board = BoardParam.of(boardDto);
+        model.addAttribute("board", board);
+
+        List<CommentDto> comments =
+                commentService.list(id, "1001");
+        List<CommentParam> commentParams =
+                CommentParam.of(comments);
+        model.addAttribute("comments", commentParams);
 
         Member member = memberService.detail(principal.getName());
         model.addAttribute("memberName", member.getName());
