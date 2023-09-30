@@ -63,6 +63,7 @@ public class MemberServiceImpl implements MemberService{
                 .build();
         memberRepository.save(member);
 
+
         return true;
     }
 }

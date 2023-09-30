@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $('#registerForm').on('submit', function(){
+                if(!confirm('회원가입을 진행하시겠습니까?')){
+                    return false;
+                }
+
+                var $this = $(this);
+                var url = '/api/member/register';
+                var password = $this.find('input[name=password]').val();
+                var rePassword = $this.find('input[name=rePassword]').val();
+                if(password !== rePassword){
+                    alert('입력한 비밀번호가 서로 다릅니다.');
+                    return false;
+                }
+
+                var parameter ={
+                    userId : $this.find('input[name=userId]').val(),
+                    name : $this.find('input[name=name]').val(),
+                    password : password
+                };
+
+                axios.post(url, parameter).then(function(response){
+                    console.log(response);
+                    response.data = response.data || {};
+                    response.data.header = response.data.header || {};
+
+                    if(!response.data.header.result){
+                        alert(response.data.header.message);
+                        return false;
+                    }
+                    alert('회원가입이 정상적으로 처리되었습니다.');
+                    location.href ='/member/login';
+                }).catch(function(err){
+                    alert('회원가입을 실패했습니다.');
+                    console.log(err);
+                });
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>회원가입 페이지</h1>
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+<form method="post" id="registerForm">
+    <div>
+        <input type="email" name="userId" placeholder="아이디(이메일) 입력" required/>
+    </div>
+    <div>
+        <input type="text" name="name" placeholder="이름 입력" required/>
+    </div>
+    <div>
+        <input type="password" name="password" placeholder="비밀번호 입력" required />
+    </div>
+    <div>
+        <input type="password" name="rePassword" placeholder="확인 비밀번호 입력" required />
+    </div>
+
+    <div>
+        <button>회원 가입 하기</button>
+    </div>
+</form>
+</body>
+</html>

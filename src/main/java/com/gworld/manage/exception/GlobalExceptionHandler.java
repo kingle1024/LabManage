@@ -1,7 +1,13 @@
 package com.gworld.manage.exception;
 
+import com.gworld.manage.common.model.ResponseResult;
 import com.gworld.manage.dto.ErrorResponse;
+import com.gworld.manage.model.ServiceResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +20,17 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleAccountException(NoticeException e){
         log.error("{} is occured.", e.getErrorCode());
         return new ErrorResponse(e.getErrorCode(), e.getErrorMessage());
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> MethodArgumentNotValidException(MethodArgumentNotValidException e){
+        log.error("MethodArgumentNotValidException is occurred.", e);
+        ResponseResult responseResult;
+        BindingResult bindingResult = e.getBindingResult();
+        FieldError fieldError = bindingResult.getFieldError();
+
+        responseResult = new ResponseResult(false, fieldError.getDefaultMessage());
+
+        return ResponseEntity.ok().body(responseResult);
     }
     @ExceptionHandler(Exception.class)
     public ErrorResponse handleException(Exception e){

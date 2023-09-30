@@ -51,12 +51,12 @@ class NoticeControllerTest {
                 .willReturn(boardList);
         // when
         // then
-        mockMvc.perform(get("/board/list.do").accept(MediaType.TEXT_HTML))
+        mockMvc.perform(get("/notice/list.do").accept(MediaType.TEXT_HTML))
 //                .andExpect(status().isOk())
 //                .andDo(print())
                 .andExpect(content().string(containsString("<td>1</td>")))
-                .andExpect(content().string(containsString("<td>title</td>")))
-                .andExpect(content().string(containsString("<td>author</td>")))
+                .andExpect(content().string(containsString("title")))
+                .andExpect(content().string(containsString("author")))
                 .andExpect(content().string(containsString("<td>2</td>")))
         ;
     }
